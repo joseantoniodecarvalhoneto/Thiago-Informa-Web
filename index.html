@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiago Informa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="tela-login" class="container-fluid login-container">
+        <img src="css/imagens/logo.png" alt="Logo Escola" class="login-logo rounded-circle shadow">
+
+        <div class="login-card">
+            <h4 class="mb-1 fw-bold">Login</h4>
+            <p class="text-muted small mb-4">Preencha os campos abaixo</p>
+
+            <form id="formLogin" onsubmit="controladora.executarLogin(event)">
+                <div class="input-group mb-3 custom-input">
+                    <input type="email" id="email" class="form-control border-0" placeholder="E-mail" required>
+                    <span class="input-group-text bg-white border-0"><i
+                            class="fa-regular fa-eye text-danger"></i></span>
+                </div>
+
+                <div class="input-group mb-4 custom-input">
+                    <input type="password" id="senha" class="form-control border-0" placeholder="Senha" required>
+                    <span class="input-group-text bg-white border-0"><i
+                            class="fa-solid fa-eye-slash text-danger"></i></span>
+                </div>
+
+                <button type="submit" class="btn btn-entrar shadow-sm">Entrar</button>
+
+                <div class="mt-3">
+                    <a href="#" class="text-decoration-none small text-secondary" data-bs-toggle="modal"
+                        data-bs-target="#modalCadastrarUsuario">Criar nova conta de Administrador</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div id="tela-home" class="d-none">
+
+        <header class="header-azul text-white p-3 sticky-top">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0 fw-bold">Thiago Informa</h5>
+                    <small class="opacity-75">Agenda online</small>
+                </div>
+                <div class="d-flex gap-3 align-items-center">
+                    <i class="fa-solid fa-bell fs-5 cursor-pointer"></i>
+                    <i class="fa-solid fa-gear fs-5 cursor-pointer" onclick="controladora.toggleMenuOpcoes()"></i>
+                    
+                    <i class="fa-solid fa-bars fs-5 cursor-pointer d-none d-md-block ms-2" data-bs-toggle="offcanvas" data-bs-target="#menuLateralDesktop"></i>
+                </div>
+            </div>
+        </header>
+
+        <div id="menu-opcoes" class="menu-opcoes-card d-none">
+            <div class="p-2 fw-bold border-bottom d-flex justify-content-between align-items-center">
+                <span>Opções</span>
+                <i class="fa-solid fa-gear text-dark"></i>
+            </div>
+            <ul class="list-unstyled mb-0">
+                <li class="p-2 cursor-pointer text-dark small" onclick="controladora.abrirModalEditarUsuario()"><i
+                        class="fa-solid fa-user-pen me-2"></i> Editar Perfil</li>
+                <li class="p-2 cursor-pointer text-dark small"><i class="fa-solid fa-circle-half-stroke me-2"></i> Modo
+                    escuro</li>
+                <li class="p-2 cursor-pointer text-dark small"><i class="fa-solid fa-bell-slash me-2"></i> Silenciar
+                </li>
+                <li class="p-2 cursor-pointer text-danger small border-top" onclick="controladora.excluirConta()"><i
+                        class="fa-solid fa-user-xmark me-2"></i> Excluir Conta</li>
+                <li class="p-2 cursor-pointer text-danger small border-top" onclick="controladora.logout()"><i
+                        class="fa-solid fa-right-from-bracket me-2"></i> Sair</li>
+            </ul>
+        </div>
+
+        <!-- Conteúdo Principal Dinâmico -->
+        <main class="container my-4 pb-5">
+
+            <!-- ================= ABA 1: INÍCIO (Feed) ================= -->
+            <div id="aba-inicio">
+                <!-- Seção: Fixado -->
+                <section class="mb-4">
+                    <h6 class="fw-bold border-bottom pb-2">Fixado</h6>
+
+                    <!-- Início do Carrossel Bootstrap -->
+                    <div id="carrosselFixados" class="carousel slide" data-bs-ride="carousel">
+                        <!-- O px-4 e pb-2 dão espaço para os botões e a sombra da borda -->
+                        <div class="carousel-inner px-4 pb-2" id="container-fixados">
+
+                            <!-- Card 1 (Precisa ter a classe 'active' para ser o primeiro) -->
+                            <div class="carousel-item active">
+                                <div class="card card-fixado p-3 position-relative w-100">
+                                    <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-secondary text-rotate-45"></i>
+                                    <span class="fw-bold small d-block">Reunião de pais e mestres — 3.° Bimestre</span>
+                                    <p class="text-muted small mb-0 mt-1 text-truncate-2">Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="carousel-item">
+                                <div class="card card-fixado p-3 position-relative w-100">
+                                    <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-secondary text-rotate-45"></i>
+                                    <span class="fw-bold small d-block">Festa Junina EMEI Thiago Silva — 20/06</span>
+                                    <p class="text-muted small mb-0 mt-1 text-truncate-2">Venha participar da nossa festa com muita comida típica, brincadeiras e diversão!</p>
+                                </div>
+                            </div>
+
+                             <!-- Card 3 -->
+                             <div class="carousel-item">
+                                <div class="card card-fixado p-3 position-relative w-100">
+                                    <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-secondary text-rotate-45"></i>
+                                    <span class="fw-bold small d-block">Aviso de Feriado Prolongado</span>
+                                    <p class="text-muted small mb-0 mt-1 text-truncate-2">Informamos que a escola estará fechada durante os dias 07 e 08 de setembro.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Botões Laterais de Navegação do Carrossel -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carrosselFixados" data-bs-slide="prev" style="width: 25px;">
+                            <i class="fa-solid fa-circle-chevron-left text-danger fs-4 bg-white rounded-circle"></i>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carrosselFixados" data-bs-slide="next" style="width: 25px;">
+                            <i class="fa-solid fa-circle-chevron-right text-danger fs-4 bg-white rounded-circle"></i>
+                            <span class="visually-hidden">Próximo</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Seção: Feed Geral -->
+                <section>
+                    <h6 class="fw-bold border-bottom pb-2">Feed</h6>
+                    <div class="row g-3" id="container-feed">
+                        </div>
+                </section>
+            </div>
+            <!-- ================= ABA 2: PROJETOS ================= -->
+            <div id="aba-projetos" class="d-none">
+                <h6 class="fw-bold border-bottom pb-2">Projetos</h6>
+
+                <!-- Botão para abrir o Modal de Novo Projeto -->
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm" data-bs-toggle="modal"
+                        data-bs-target="#modalProjeto">
+                        <i class="fa-solid fa-plus me-1"></i> Novo Projeto
+                    </button>
+                </div>
+
+                <!-- Filtros (Botões arredondados com borda vermelha) -->
+                <div class="d-flex gap-2 mb-3 overflow-auto pb-2">
+                    <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Todos <i
+                            class="fa-solid fa-caret-down ms-1"></i></button>
+                    <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Ordenar
+                        <i class="fa-solid fa-caret-down ms-1"></i></button>
+                    <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Buscar <i
+                            class="fa-solid fa-caret-down ms-1"></i></button>
+                </div>
+
+                <!-- Lista de Projetos -->
+                <div class="row g-3" id="lista-projetos">
+                    <div class="col-12 col-md-6">
+                        <div class="card card-feed p-2 d-flex flex-row align-items-center gap-3">
+                            <div class="bg-light border rounded p-3 text-center" style="width: 80px; height: 70px;">
+                                <i class="fa-regular fa-image text-muted"></i>
+                            </div>
+                            <div>
+                                <span class="fw-bold small d-block">Oficina de massinha - 3.º Ano A</span>
+                                <p class="text-muted mb-0" style="font-size: 0.75rem;">Consectetur adipiscing elit
+                                    quisque faucibus ex sapien vitae.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= ABA 3: AGENDA ================= -->
+
+            <!-- Input de Data (Estilo idêntico ao desenho) -->
+            <div id="aba-agenda" class="d-none">
+                <h6 class="fw-bold border-bottom pb-2">Agenda</h6>
+
+                <div class="mb-4 position-relative">
+                    <label class="text-danger small fw-bold bg-white px-1 position-absolute"
+                        style="top: -10px; left: 15px; z-index: 5;">Date</label>
+                    <div class="input-group custom-input overflow-hidden p-0 d-flex align-items-center pe-3 bg-white">
+                        <input type="text" class="form-control border-0 py-2 fw-bold text-secondary shadow-none"
+                            value="17/08/2025">
+                        <i class="fa-regular fa-calendar-days text-secondary"></i>
+                    </div>
+                    <small class="text-muted d-block mt-1 ms-2" style="font-size: 0.7rem;">DD/MM/AAAA</small>
+                </div>
+
+                <div class="calendario-container p-3 mb-4">
+                    <!-- Cabeçalho (Mês e Ano) dinâmico -->
+                    <div class="d-flex justify-content-between align-items-center mb-3 px-1">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="controladora.mudarMes(-1)"></i>
+                            <span class="fw-bold small text-secondary" id="display-mes">AGO <i class="fa-solid fa-caret-down ms-1" style="font-size: 0.7rem;"></i></span>
+                            <i class="fa-solid fa-chevron-right text-muted cursor-pointer fs-7" onclick="controladora.mudarMes(1)"></i>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="controladora.mudarAno(-1)"></i>
+                            <span class="fw-bold small text-secondary" id="display-ano">2025 <i class="fa-solid fa-caret-down ms-1" style="font-size: 0.7rem;"></i></span>
+                            <i class="fa-solid fa-chevron-right text-muted cursor-pointer fs-7" onclick="controladora.mudarAno(1)"></i>
+                        </div>
+                    </div>
+
+                    <!-- ESTA DIV PRECISA FICAR TOTALMENTE VAZIA NO HTML! -->
+                    <!-- O JavaScript vai injetar todos os números aqui dentro -->
+                    <div class="calendario-grid" id="grid-dias"></div>
+                </div>
+
+                    <div class="calendario-grid" id="grid-dias">
+                    </div>
+                </div>
+
+
+                <h6 class="fw-bold mt-4 border-bottom pb-2">17/08/2025</h6>
+                <div class="row g-3 pb-4">
+                    <div class="col-12">
+                        <div class="card card-fixado p-3 border-2">
+                            <span class="fw-bold small d-block">Dia do brinquedo — 3.° Ano A</span>
+                            <p class="text-muted small mb-0 mt-1">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae.</p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card card-fixado p-3 border-2">
+                            <span class="fw-bold small d-block">Tarefa de casa — 5.° Ano B</span>
+                            <p class="text-muted small mb-0 mt-1">Lorem ipsum dolor sit amet consectetur adipiscing elit. Consectetur adipiscing elit quisque faucibus ex sapien vitae.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h6 class="fw-bold mt-5 border-bottom pb-2 text-primary">
+                    <i class="fa-solid fa-flag me-2"></i> Feriados Nacionais (BrasilAPI)
+                </h6>
+                <div class="row g-3 pb-5" id="lista-feriados">
+                    <div class="col-12 text-center" id="loader-api">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Carregando...</span>
+                        </div>
+                        <p class="text-muted small mt-2">Buscando feriados na nuvem...</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Barra de Navegação Inferior (Mobile) -->
+        <nav class="navbar fixed-bottom bg-azul-escuro p-0 d-md-none shadow-lg">
+            <div class="container-fluid d-flex justify-content-around">
+                <a href="#" class="nav-link-custom active p-3" id="nav-inicio"
+                    onclick="controladora.navegarAba('inicio')"><i class="fa-solid fa-house fs-5"></i></a>
+                <a href="#" class="nav-link-custom p-3" id="nav-projetos"
+                    onclick="controladora.navegarAba('projetos')"><i class="fa-solid fa-folder-open fs-5"></i></a>
+                <a href="#" class="nav-link-custom p-3" id="nav-agenda" onclick="controladora.navegarAba('agenda')"><i
+                        class="fa-solid fa-calendar-days fs-5"></i></a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="offcanvas offcanvas-end bg-azul-escuro text-white" tabindex="-1" id="menuLateralDesktop">
+            <div class="offcanvas-header border-bottom" style="border-color: rgba(255,255,255,0.2) !important;">
+                <h5 class="offcanvas-title fw-bold">Navegação</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body p-0">
+                <ul class="list-unstyled w-100 mt-2">
+                    <li>
+                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="controladora.navegarAba('inicio'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
+                            <i class="fa-solid fa-house me-3 fs-5"></i> Início
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="controladora.navegarAba('projetos'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
+                            <i class="fa-solid fa-folder-open me-3 fs-5"></i> Projetos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="controladora.navegarAba('agenda'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
+                            <i class="fa-solid fa-calendar-days me-3 fs-5"></i> Agenda
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    <!-- ================= MODAL: CADASTRAR PROJETO ================= -->
+    <div class="modal fade" id="modalProjeto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; border: 3px solid #1a73e8;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark">Cadastrar Novo Projeto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formProjeto">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Nome do Projeto</label>
+                            <input type="text" id="inputNomeProjeto" class="form-control custom-input" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Descrição</label>
+                            <textarea id="inputDescProjeto" class="form-control custom-input" rows="3"
+                                required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
+                    <button type="button" class="btn btn-light rounded-pill px-4"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-entrar px-4" onclick="controladora.criarProjeto()">Salvar
+                        Projeto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: EDITAR PROJETO ================= -->
+    <div class="modal fade" id="modalEditarProjeto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; border: 3px solid #ffc107;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark">Editar Projeto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarProjeto">
+                        <!-- Campo oculto para guardar o ID do projeto que está sendo editado -->
+                        <input type="hidden" id="editIdProjeto">
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Nome do Projeto</label>
+                            <input type="text" id="editNomeProjeto" class="form-control custom-input" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Descrição</label>
+                            <textarea id="editDescProjeto" class="form-control custom-input" rows="3"
+                                required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
+                    <button type="button" class="btn btn-light rounded-pill px-4"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning rounded-pill text-dark fw-bold px-4"
+                        onclick="controladora.salvarEdicaoProjeto()">Atualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: CADASTRAR USUÁRIO ================= -->
+    <div class="modal fade" id="modalCadastrarUsuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; border: 3px solid #1a73e8;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark">Nova Conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNovoUsuario">
+                        <div class="mb-3">
+                            <input type="text" id="cadNomeUsuario" class="form-control custom-input"
+                                placeholder="Seu Nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" id="cadEmailUsuario" class="form-control custom-input"
+                                placeholder="E-mail" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" id="cadSenhaUsuario" class="form-control custom-input"
+                                placeholder="Senha" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center">
+                    <button type="button" class="btn btn-entrar px-4"
+                        onclick="controladora.criarUsuario()">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: EDITAR PERFIL ================= -->
+    <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 20px; border: 3px solid #ffc107;">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark">Editar Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarUsuario">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Nome</label>
+                            <input type="text" id="editNomeUsuario" class="form-control custom-input" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Nova Senha</label>
+                            <input type="password" id="editSenhaUsuario" class="form-control custom-input" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center">
+                    <button type="button" class="btn btn-warning rounded-pill text-dark fw-bold px-4"
+                        onclick="controladora.salvarEdicaoUsuario()">Atualizar Perfil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
