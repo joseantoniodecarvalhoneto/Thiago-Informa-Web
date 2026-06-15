@@ -1,4 +1,3 @@
-/* Definições Gerais e Cores do App */
 :root {
     --azul-principal: #1a73e8;
     --azul-escuro: #0f4c9c;
@@ -16,13 +15,14 @@ body {
 }
 
 /* Estilos do Login */
+
 .login-container {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #eed6d6; /* Fundo rosado sutil das suas imagens de apresentação */
+    background-color: white;
 }
 
 .login-card {
@@ -64,6 +64,7 @@ body {
 }
 
 /* Elementos da Home */
+
 .header-azul {
     background-color: var(--azul-principal);
 }
@@ -72,7 +73,6 @@ body {
     background-color: var(--azul-escuro);
 }
 
-/* Card flutuante de Opções */
 .menu-opcoes-card {
     position: absolute;
     top: 65px;
@@ -89,7 +89,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* Seção Fixados e Feed */
 .card-fixado {
     border: 2px solid var(--vermelho-borda);
     border-radius: 15px;
@@ -110,10 +109,10 @@ body {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
+    line-clamp: 2;
     overflow: hidden;
 }
 
-/* Placeholder de Imagem */
 .image-placeholder {
     background-color: #e9ecef;
     border: 2px solid #ccc;
@@ -128,7 +127,6 @@ body {
     color: #6c757d;
 }
 
-/* Navbar de Navegação customizada */
 .nav-link-custom {
     color: rgba(255, 255, 255, 0.6);
     text-align: center;
@@ -140,9 +138,10 @@ body {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* ================= CALENDÁRIO ================= */
+/* Elementos do calendário */
+
 .calendario-container {
-    background-color: #f1f3f6; /* Fundo cinza bem claro igual ao desenho */
+    background-color: #f1f3f6;
     border-radius: 20px;
 }
 
@@ -152,7 +151,7 @@ body {
 
 .calendario-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 colunas exatas */
+    grid-template-columns: repeat(7, 1fr);
     row-gap: 12px;
     text-align: center;
 }
@@ -177,12 +176,10 @@ body {
     transition: background-color 0.2s, color 0.2s;
 }
 
-/* Efeito ao passar o mouse */
 .dia-data:hover:not(.ativo):not(.opacity-25) {
     background-color: #e2e6ea;
 }
 
-/* O dia selecionado com a bolinha vermelha */
 .dia-data.ativo {
     background-color: var(--vermelho-borda);
     color: white;

@@ -79,21 +79,16 @@
             </ul>
         </div>
 
-        <!-- Conteúdo Principal Dinâmico -->
         <main class="container my-4 pb-5">
 
-            <!-- ================= ABA 1: INÍCIO (Feed) ================= -->
+            <!-- ================= ABA 1: INÍCIO ================= -->
             <div id="aba-inicio">
-                <!-- Seção: Fixado -->
                 <section class="mb-4">
                     <h6 class="fw-bold border-bottom pb-2">Fixado</h6>
 
-                    <!-- Início do Carrossel Bootstrap -->
                     <div id="carrosselFixados" class="carousel slide" data-bs-ride="carousel">
-                        <!-- O px-4 e pb-2 dão espaço para os botões e a sombra da borda -->
                         <div class="carousel-inner px-4 pb-2" id="container-fixados">
 
-                            <!-- Card 1 (Precisa ter a classe 'active' para ser o primeiro) -->
                             <div class="carousel-item active">
                                 <div class="card card-fixado p-3 position-relative w-100">
                                     <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-secondary text-rotate-45"></i>
@@ -102,7 +97,6 @@
                                 </div>
                             </div>
 
-                            <!-- Card 2 -->
                             <div class="carousel-item">
                                 <div class="card card-fixado p-3 position-relative w-100">
                                     <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-secondary text-rotate-45"></i>
@@ -111,7 +105,6 @@
                                 </div>
                             </div>
 
-                             <!-- Card 3 -->
                              <div class="carousel-item">
                                 <div class="card card-fixado p-3 position-relative w-100">
                                     <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-secondary text-rotate-45"></i>
@@ -122,7 +115,6 @@
 
                         </div>
 
-                        <!-- Botões Laterais de Navegação do Carrossel -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#carrosselFixados" data-bs-slide="prev" style="width: 25px;">
                             <i class="fa-solid fa-circle-chevron-left text-danger fs-4 bg-white rounded-circle"></i>
                             <span class="visually-hidden">Anterior</span>
@@ -134,13 +126,13 @@
                     </div>
                 </section>
 
-                <!-- Seção: Feed Geral -->
                 <section>
                     <h6 class="fw-bold border-bottom pb-2">Feed</h6>
                     <div class="row g-3" id="container-feed">
                         </div>
                 </section>
             </div>
+            
             <!-- ================= ABA 2: PROJETOS ================= -->
             <div id="aba-projetos" class="d-none">
                 <h6 class="fw-bold border-bottom pb-2">Projetos</h6>
@@ -153,7 +145,7 @@
                     </button>
                 </div>
 
-                <!-- Filtros (Botões arredondados com borda vermelha) -->
+                <!-- Filtros (Colocar lógica) -->
                 <div class="d-flex gap-2 mb-3 overflow-auto pb-2">
                     <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Todos <i
                             class="fa-solid fa-caret-down ms-1"></i></button>
@@ -163,7 +155,6 @@
                             class="fa-solid fa-caret-down ms-1"></i></button>
                 </div>
 
-                <!-- Lista de Projetos -->
                 <div class="row g-3" id="lista-projetos">
                     <div class="col-12 col-md-6">
                         <div class="card card-feed p-2 d-flex flex-row align-items-center gap-3">
@@ -182,7 +173,6 @@
 
             <!-- ================= ABA 3: AGENDA ================= -->
 
-            <!-- Input de Data (Estilo idêntico ao desenho) -->
             <div id="aba-agenda" class="d-none">
                 <h6 class="fw-bold border-bottom pb-2">Agenda</h6>
 
@@ -198,7 +188,6 @@
                 </div>
 
                 <div class="calendario-container p-3 mb-4">
-                    <!-- Cabeçalho (Mês e Ano) dinâmico -->
                     <div class="d-flex justify-content-between align-items-center mb-3 px-1">
                         <div class="d-flex align-items-center gap-3">
                             <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="controladora.mudarMes(-1)"></i>
@@ -212,16 +201,10 @@
                         </div>
                     </div>
 
-                    <!-- ESTA DIV PRECISA FICAR TOTALMENTE VAZIA NO HTML! -->
-                    <!-- O JavaScript vai injetar todos os números aqui dentro -->
                     <div class="calendario-grid" id="grid-dias"></div>
                 </div>
 
-                    <div class="calendario-grid" id="grid-dias">
-                    </div>
-                </div>
-
-
+                <!-- Exemplos calendário -->
                 <h6 class="fw-bold mt-4 border-bottom pb-2">17/08/2025</h6>
                 <div class="row g-3 pb-4">
                     <div class="col-12">
@@ -239,7 +222,7 @@
                 </div>
 
                 <h6 class="fw-bold mt-5 border-bottom pb-2 text-primary">
-                    <i class="fa-solid fa-flag me-2"></i> Feriados Nacionais (BrasilAPI)
+                    <i class="fa-solid fa-flag me-2"></i> Feriados Nacionais
                 </h6>
                 <div class="row g-3 pb-5" id="lista-feriados">
                     <div class="col-12 text-center" id="loader-api">
@@ -253,7 +236,6 @@
 
         </main>
 
-        <!-- Barra de Navegação Inferior (Mobile) -->
         <nav class="navbar fixed-bottom bg-azul-escuro p-0 d-md-none shadow-lg">
             <div class="container-fluid d-flex justify-content-around">
                 <a href="#" class="nav-link-custom active p-3" id="nav-inicio"
@@ -292,7 +274,6 @@
             </div>
         </div>
 
-    <!-- ================= MODAL: CADASTRAR PROJETO ================= -->
     <div class="modal fade" id="modalProjeto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 20px; border: 3px solid #1a73e8;">
@@ -323,7 +304,6 @@
         </div>
     </div>
 
-    <!-- ================= MODAL: EDITAR PROJETO ================= -->
     <div class="modal fade" id="modalEditarProjeto" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 20px; border: 3px solid #ffc107;">
@@ -333,7 +313,6 @@
                 </div>
                 <div class="modal-body">
                     <form id="formEditarProjeto">
-                        <!-- Campo oculto para guardar o ID do projeto que está sendo editado -->
                         <input type="hidden" id="editIdProjeto">
 
                         <div class="mb-3">
@@ -357,7 +336,6 @@
         </div>
     </div>
 
-    <!-- ================= MODAL: CADASTRAR USUÁRIO ================= -->
     <div class="modal fade" id="modalCadastrarUsuario" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 20px; border: 3px solid #1a73e8;">
@@ -389,7 +367,6 @@
         </div>
     </div>
 
-    <!-- ================= MODAL: EDITAR PERFIL ================= -->
     <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 20px; border: 3px solid #ffc107;">
