@@ -19,7 +19,7 @@
             <h4 class="mb-1 fw-bold">Login</h4>
             <p class="text-muted small mb-4">Preencha os campos abaixo</p>
 
-            <form id="formLogin" onsubmit="controladora.executarLogin(event)">
+            <form id="formLogin" onsubmit="app.executarLogin(event)">
                 <div class="input-group mb-3 custom-input">
                     <input type="email" id="email" class="form-control border-0" placeholder="E-mail" required>
                     <span class="input-group-text bg-white border-0"><i
@@ -53,7 +53,7 @@
                 </div>
                 <div class="d-flex gap-3 align-items-center">
                     <i class="fa-solid fa-bell fs-5 cursor-pointer"></i>
-                    <i class="fa-solid fa-gear fs-5 cursor-pointer" onclick="controladora.toggleMenuOpcoes()"></i>
+                    <i class="fa-solid fa-gear fs-5 cursor-pointer" onclick="app.toggleMenuOpcoes()"></i>
                     
                     <i class="fa-solid fa-bars fs-5 cursor-pointer d-none d-md-block ms-2" data-bs-toggle="offcanvas" data-bs-target="#menuLateralDesktop"></i>
                 </div>
@@ -66,15 +66,15 @@
                 <i class="fa-solid fa-gear text-dark"></i>
             </div>
             <ul class="list-unstyled mb-0">
-                <li class="p-2 cursor-pointer text-dark small" onclick="controladora.abrirModalEditarUsuario()"><i
+                <li class="p-2 cursor-pointer text-dark small" onclick="app.abrirModalEditarUsuario()"><i
                         class="fa-solid fa-user-pen me-2"></i> Editar Perfil</li>
                 <li class="p-2 cursor-pointer text-dark small"><i class="fa-solid fa-circle-half-stroke me-2"></i> Modo
                     escuro</li>
                 <li class="p-2 cursor-pointer text-dark small"><i class="fa-solid fa-bell-slash me-2"></i> Silenciar
                 </li>
-                <li class="p-2 cursor-pointer text-danger small border-top" onclick="controladora.excluirConta()"><i
+                <li class="p-2 cursor-pointer text-danger small border-top" onclick="app.excluirConta()"><i
                         class="fa-solid fa-user-xmark me-2"></i> Excluir Conta</li>
-                <li class="p-2 cursor-pointer text-danger small border-top" onclick="controladora.logout()"><i
+                <li class="p-2 cursor-pointer text-danger small border-top" onclick="app.logout()"><i
                         class="fa-solid fa-right-from-bracket me-2"></i> Sair</li>
             </ul>
         </div>
@@ -190,14 +190,14 @@
                 <div class="calendario-container p-3 mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3 px-1">
                         <div class="d-flex align-items-center gap-3">
-                            <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="controladora.mudarMes(-1)"></i>
+                            <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="app.mudarMes(-1)"></i>
                             <span class="fw-bold small text-secondary" id="display-mes">AGO <i class="fa-solid fa-caret-down ms-1" style="font-size: 0.7rem;"></i></span>
-                            <i class="fa-solid fa-chevron-right text-muted cursor-pointer fs-7" onclick="controladora.mudarMes(1)"></i>
+                            <i class="fa-solid fa-chevron-right text-muted cursor-pointer fs-7" onclick="app.mudarMes(1)"></i>
                         </div>
                         <div class="d-flex align-items-center gap-3">
-                            <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="controladora.mudarAno(-1)"></i>
+                            <i class="fa-solid fa-chevron-left text-muted cursor-pointer fs-7" onclick="app.mudarAno(-1)"></i>
                             <span class="fw-bold small text-secondary" id="display-ano">2025 <i class="fa-solid fa-caret-down ms-1" style="font-size: 0.7rem;"></i></span>
-                            <i class="fa-solid fa-chevron-right text-muted cursor-pointer fs-7" onclick="controladora.mudarAno(1)"></i>
+                            <i class="fa-solid fa-chevron-right text-muted cursor-pointer fs-7" onclick="app.mudarAno(1)"></i>
                         </div>
                     </div>
 
@@ -239,10 +239,10 @@
         <nav class="navbar fixed-bottom bg-azul-escuro p-0 d-md-none shadow-lg">
             <div class="container-fluid d-flex justify-content-around">
                 <a href="#" class="nav-link-custom active p-3" id="nav-inicio"
-                    onclick="controladora.navegarAba('inicio')"><i class="fa-solid fa-house fs-5"></i></a>
+                    onclick="app.navegarAba('inicio')"><i class="fa-solid fa-house fs-5"></i></a>
                 <a href="#" class="nav-link-custom p-3" id="nav-projetos"
-                    onclick="controladora.navegarAba('projetos')"><i class="fa-solid fa-folder-open fs-5"></i></a>
-                <a href="#" class="nav-link-custom p-3" id="nav-agenda" onclick="controladora.navegarAba('agenda')"><i
+                    onclick="app.navegarAba('projetos')"><i class="fa-solid fa-folder-open fs-5"></i></a>
+                <a href="#" class="nav-link-custom p-3" id="nav-agenda" onclick="app.navegarAba('agenda')"><i
                         class="fa-solid fa-calendar-days fs-5"></i></a>
             </div>
         </nav>
@@ -256,17 +256,17 @@
             <div class="offcanvas-body p-0">
                 <ul class="list-unstyled w-100 mt-2">
                     <li>
-                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="controladora.navegarAba('inicio'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
+                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="app.navegarAba('inicio'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
                             <i class="fa-solid fa-house me-3 fs-5"></i> Início
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="controladora.navegarAba('projetos'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
+                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="app.navegarAba('projetos'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
                             <i class="fa-solid fa-folder-open me-3 fs-5"></i> Projetos
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="controladora.navegarAba('agenda'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
+                        <a href="#" class="d-block text-white text-decoration-none p-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;" onclick="app.navegarAba('agenda'); bootstrap.Offcanvas.getInstance(document.getElementById('menuLateralDesktop')).hide();">
                             <i class="fa-solid fa-calendar-days me-3 fs-5"></i> Agenda
                         </a>
                     </li>
@@ -297,7 +297,7 @@
                 <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
                     <button type="button" class="btn btn-light rounded-pill px-4"
                         data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-entrar px-4" onclick="controladora.criarProjeto()">Salvar
+                    <button type="button" class="btn btn-entrar px-4" onclick="app.criarProjeto()">Salvar
                         Projeto</button>
                 </div>
             </div>
@@ -330,7 +330,7 @@
                     <button type="button" class="btn btn-light rounded-pill px-4"
                         data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-warning rounded-pill text-dark fw-bold px-4"
-                        onclick="controladora.salvarEdicaoProjeto()">Atualizar</button>
+                        onclick="app.salvarEdicaoProjeto()">Atualizar</button>
                 </div>
             </div>
         </div>
@@ -361,7 +361,7 @@
                 </div>
                 <div class="modal-footer border-0 pt-0 justify-content-center">
                     <button type="button" class="btn btn-entrar px-4"
-                        onclick="controladora.criarUsuario()">Cadastrar</button>
+                        onclick="app.criarUsuario()">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -388,13 +388,30 @@
                 </div>
                 <div class="modal-footer border-0 pt-0 justify-content-center">
                     <button type="button" class="btn btn-warning rounded-pill text-dark fw-bold px-4"
-                        onclick="controladora.salvarEdicaoUsuario()">Atualizar Perfil</button>
+                        onclick="app.salvarEdicaoUsuario()">Atualizar Perfil</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Models -->
+    <script src="scripts/models/Usuario.js"></script>
+    <script src="scripts/models/Projeto.js"></script>
+    <script src="scripts/models/Informativo.js"></script>
+
+    <!-- Factory -->
+    <script src="scripts/factories/Fabrica.js"></script>
+
+    <!-- Controllers -->
+    <script src="scripts/controllers/ControladoraAutenticacao.js"></script>
+    <script src="scripts/controllers/ControladoraInformativo.js"></script>
+    <script src="scripts/controllers/ControladoraProjetos.js"></script>
+
+    <!-- Facade -->
+    <script src="scripts/Interface.js"></script>
+
+    <!-- Ponto de Entrada -->
     <script src="scripts/script.js"></script>
 </body>
 
