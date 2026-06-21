@@ -71,6 +71,19 @@ class Interface {
         }
     }
 
+    mostraSenha(){
+        const inputSenha = document.getElementById('senha');
+        const iconeSenha = document.getElementById('iconeSenha');
+
+        if (inputSenha.type === 'password') {
+            inputSenha.type = 'text';
+            iconeSenha.classList.replace('bi-eye-slash', 'bi-eye');
+        } else {
+            inputSenha.type = 'password';
+            iconeSenha.classList.replace('bi-eye', 'bi-eye-slash');
+        }
+    }
+
     /**
      * Cria um novo usuário delegando para ControladoraAutenticacao.
      */
