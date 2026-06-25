@@ -91,11 +91,11 @@ body {
 /* Elementos da Home */
 
 .header-azul {
-    background-color: var(--azul-principal);
+    background: linear-gradient(var(--azul-escuro), var(--azul-principal));
 }
 
 .bg-azul-escuro {
-    background-color: var(--azul-escuro);
+    background: linear-gradient(var(--azul-escuro), var(--azul-principal));
 }
 
 .menu-opcoes-card {
