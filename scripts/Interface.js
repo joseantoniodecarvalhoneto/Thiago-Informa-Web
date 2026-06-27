@@ -71,7 +71,7 @@ class Interface {
         }
     }
 
-    mostraSenha(){
+    mostraSenha() {
         const inputSenha = document.getElementById('senha');
         const iconeSenha = document.getElementById('iconeSenha');
 
@@ -175,6 +175,75 @@ class Interface {
      */
     carregarInformativos() {
         this.controladoraInfo.carregarInformativos();
+        this.controladoraInfo.carregarFixados(); // Adicione esta linha
+    }
+
+    /**
+     * Alterna o estado de fixação do post.
+     * @param {number} id 
+     */
+    alternarFixado(id) {
+        this.controladoraInfo.alternarFixado(id);
+    }
+
+    /**
+     * Cria um novo informativo (post) no feed.
+     */
+    criarInformativo() {
+        this.controladoraInfo.criarInformativo();
+    }
+
+    /**
+     * Abre o modal de edição de informativo.
+     * @param {number} id
+     */
+    abrirModalEditarInfo(id) {
+        this.controladoraInfo.abrirModalEditarInfo(id);
+    }
+
+    /**
+     * Salva as edições do informativo.
+     */
+    editarInformativo() {
+        this.controladoraInfo.editarInformativo();
+    }
+
+    /**
+     * Exclui um informativo do feed.
+     * @param {number} id
+     */
+    excluirInfo(id) {
+        this.controladoraInfo.excluirInfo(id);
+    }
+
+    /**
+     * Gera o preview de imagem nos modais.
+     */
+    gerarPreviewImagem(inputElement, containerId) {
+        this.controladoraInfo.gerarPreviewImagem(inputElement, containerId);
+    }
+
+    /**
+     * Remove a imagem do preview nos modais.
+     */
+    removerPreviewImagem(containerId, hiddenInputId) {
+        this.controladoraInfo.removerPreviewImagem(containerId, hiddenInputId);
+    }
+
+    /**
+     * Rola o carrossel de fixados manualmente.
+     * @param {number} direcao 
+     */
+    scrollCarrossel(direcao) {
+        this.controladoraInfo.scrollCarrossel(direcao);
+    }
+
+    /**
+     * Abre o modal para visualizar o post completo.
+     * @param {number} id
+     */
+    abrirModalVisualizarInfo(id) {
+        this.controladoraInfo.abrirModalVisualizarInfo(id);
     }
 
     // ========================

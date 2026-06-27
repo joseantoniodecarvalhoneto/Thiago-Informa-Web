@@ -1,13 +1,15 @@
 /**
  * Classe Informativo
- * Responsabilidade única: representar os dados de um informativo/notícia.
+ * Responsabilidade única: representar os dados de um informativo/notícia (Post).
  */
 class Informativo {
-    constructor(titulo, descricao, data, imagem) {
+    constructor(titulo, descricao, data, imagem, fixado = false) {
+        this.id = Date.now(); 
         this.titulo = titulo;
         this.descricao = descricao;
-        this.data = data;
+        this.data = data || new Date().toLocaleDateString('pt-BR');
         this.imagem = imagem || "";
+        this.fixado = fixado;
     }
 
     /**
