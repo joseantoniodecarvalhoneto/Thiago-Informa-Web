@@ -258,12 +258,14 @@ class Interface {
         document.getElementById('aba-inicio').classList.add('d-none');
         document.getElementById('aba-projetos').classList.add('d-none');
         document.getElementById('aba-agenda').classList.add('d-none');
+        document.getElementById('aba-perfil').classList.add('d-none')
 
         document.getElementById('aba-' + abaNome).classList.remove('d-none');
 
         document.getElementById('nav-inicio').classList.remove('active');
         document.getElementById('nav-projetos').classList.remove('active');
         document.getElementById('nav-agenda').classList.remove('active');
+        document.getElementById('nav-perfil').classList.remove('active');
 
         document.getElementById('nav-' + abaNome).classList.add('active');
         document.getElementById('menu-opcoes').classList.add('d-none');
