@@ -252,30 +252,66 @@
 
              <!-- ================= ABA 4: PERFIL ================= -->
 
-              <div id="aba-perfil" class="d-none">
-                <h6 class="fw-bold border-bottom pb-2">Perfil</h6>
+            <div id="aba-perfil" class="d-none">
+                <h6 id= "borda-perfil" class="fw-bold border-bottom pb-2">Perfil</h6>
 
-                <div class="text-center mt-4">
-                    <i class="bi bi-person-circle text-danger" style="font-size: 4rem;"></i>
-                    <h4 class="fw-bold mt-2" id="perfil-nome">Maria Silva</h4>
-                    <p class="text-muted small mb-1" id="perfil-email">maria@email.com</p>
-                    <span class="badge bg-danger mb-4" id="perfil-papel">Administrador</span>
+                <div class="perfil-card">
+                    
+                      
+                    <div class="perfil-banner">
+                        <div class="perfil-avatar">
+                            <div class="perfil-avatar-inner"> 
+                                <i class="fa-solid fa-user fs-1"></i>
+                            </div>
+                        </div>
+                    </div>
 
-                            
-                    <div >
-                        <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm" data-bs-toggle="modal"
-                            data-bs-target="#modalEditarUsuario">
-                            <i class="fa-solid fa-user-pen me-1"></i> Editar Perfil
+                    <div class="perfil-info-topo text-center">
+                        <p class="perfil-nome" id="perfil-nome"></p>
+                        <p class="perfil-email" id="perfil-email"></p>
+                        <span class="perfil-badge" id="perfil-papel"></span>
+                    </div>
+
+                    <hr class="perfil-divisor">
+
+                    <div class="perfil-campos">
+                        <div class="perfil-campo">
+                            <i class="ti ti-user perfil-icone"></i>
+                            <div>
+                                <p class="perfil-label">Nome</p>
+                                <p class="perfil-valor" id="perfil-campo-nome"></p>
+                            </div>
+                        </div>
+
+                        <div class="perfil-campo perfil-campo-borda">
+                            <i class="ti ti-mail perfil-icone"></i>
+                            <div>
+                                <p class="perfil-label">E-mail</p>
+                                <p class="perfil-valor" id="perfil-campo-email"></p>
+                            </div>
+                        </div>
+
+                        <div class="perfil-campo">
+                            <i class="ti ti-shield perfil-icone"></i>
+                                <div>
+                                <p class="perfil-label">Perfil</p>
+                                <p class="perfil-valor" id="perfil-campo-papel"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="perfil-rodape">
+                        <button class="perfil-btn-editar" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                            <i class="fa-solid fa-user-pen fs-5"></i> Editar perfil
                         </button>
                     </div>
-                    <div >
-                        <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm" data-bs-toggle="modal"
-                            onclick="app.excluirConta()">
-                            <i class="fa-solid fa-user-xmark me-1"></i> Excluir Perfil
+                    <div class="perfil-rodape">
+                        <button class="perfil-btn-editar" onclick="app.excluirConta()">
+                            <i class="fa-solid fa-user-xmark fs-5"></i> Excluir perfil
                         </button>
                     </div>
                 </div>
-              </div>
+            </div>      
         </main>
 
         <nav class="navbar fixed-bottom bg-azul-escuro p-0 d-md-none shadow-lg">

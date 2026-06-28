@@ -170,6 +170,146 @@ body {
     color: white;
     background-color: rgba(255, 255, 255, 0.15);
 }
+/* Elementos da Home */
+
+/* Elementos de Perfil*/
+
+.perfil-banner {
+    background-color: var(--azul-principal);
+    height: 80px;
+    position: relative;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.perfil-avatar {
+    position: absolute;
+    bottom: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.perfil-avatar-inner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #dbeafe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--azul-escuro);
+}
+
+.perfil-card {
+    background: #fff;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(var(--azul-escuro), var(--azul-principal));
+    overflow: hidden;
+    max-width: 380px;
+    margin: 1.5rem auto 0;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.perfil-info-topo {
+    padding: 2.5rem 1.5rem 1rem;
+    text-align: center;
+}
+
+.perfil-nome {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+}
+
+.perfil-email {
+    font-size: 13px;
+    color: #9ca3af;
+    margin: 0 0 12px;
+}
+
+.perfil-badge {
+    display: inline-block;
+    background: #fde8e8;
+    color: var(--vermelho-borda);
+    font-size: 12px;
+    padding: 3px 14px;
+    border-radius: 40px;
+    font-weight: 500;
+    border: 1px solid var(--vermelho-borda);
+}
+
+.perfil-divisor {
+    margin: 0 1.5rem;
+    border-color: #e5e7eb;
+    opacity: 1;
+}
+
+.perfil-campos {
+    padding: 0.25rem 1.5rem 0.5rem;
+}
+
+.perfil-campo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.perfil-campo + .perfil-campo {
+    border-top: 1px solid #f0f0f0;
+}
+
+.perfil-icone {
+    font-size: 16px;
+    color: #9ca3af;
+}
+
+.perfil-label {
+    font-size: 11px;
+    color: #9ca3af;
+    margin: 0;
+}
+
+.perfil-valor {
+    font-size: 14px;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.perfil-rodape {
+    padding: 0.5rem 1.5rem 1.5rem;
+}
+
+.perfil-btn-editar {
+    width: 100%;
+    padding: 10px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    background: linear-gradient(var(--azul-escuro), var(--azul-principal));
+    border: 0;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.perfil-btn-editar:hover {
+    transform: scale(1.05);
+}
+
 
 /* Botão Flutuante */
 .fab-btn {

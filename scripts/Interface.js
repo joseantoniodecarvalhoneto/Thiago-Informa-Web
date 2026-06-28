@@ -59,6 +59,16 @@ class Interface {
      * Executa o login delegando para ControladoraAutenticacao.
      * @param {Event} event
      */
+
+    preencherPerfil(usuario) {
+        document.getElementById("perfil-nome").textContent = usuario.nome;
+        document.getElementById("perfil-email").textContent = usuario.email;
+        document.getElementById("perfil-papel").textContent = usuario.perfil;
+        document.getElementById("perfil-campo-nome").textContent = usuario.nome;
+        document.getElementById("perfil-campo-email").textContent = usuario.email;
+        document.getElementById("perfil-campo-papel").textContent = usuario.perfil;
+    }
+
     executarLogin(event) {
         const sucesso = this.controladoraAuth.verificaLogin(event);
 
@@ -68,6 +78,8 @@ class Interface {
 
             this.controladoraProjetos.exibirProjetos();
             this.controladoraInfo.carregarInformativos();
+
+            this.preencherPerfil(this.controladoraAuth.usuarioLogado);
         }
     }
 

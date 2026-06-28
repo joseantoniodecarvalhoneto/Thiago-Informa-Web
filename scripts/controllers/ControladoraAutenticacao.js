@@ -33,6 +33,7 @@ class ControladoraAutenticacao {
         if (usuarioValido) {
             this.conta_logada = true;
             this.usuarioLogadoEmail = usuarioValido.email;
+            this.usuarioLogado = usuarioValido;
             return true;
         } else {
             alert("E-mail ou senha incorretos! Cadastre-se primeiro.");
