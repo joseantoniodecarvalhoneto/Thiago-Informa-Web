@@ -146,13 +146,21 @@
                 </div>
 
                 <!-- Filtros (Colocar lógica) -->
-                <div class="d-flex gap-2 mb-3 overflow-auto pb-2">
-                    <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Todos <i
-                            class="fa-solid fa-caret-down ms-1"></i></button>
-                    <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Ordenar
-                        <i class="fa-solid fa-caret-down ms-1"></i></button>
-                    <button class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2">Buscar <i
-                            class="fa-solid fa-caret-down ms-1"></i></button>
+                <div class="d-flex gap-2 mb-3 pb-2">
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-outline-danger rounded-pill btn-sm px-3 fw-bold text-dark border-2 dropdown-toggle"
+                            type="button" data-bs-toggle="dropdown">
+                            Turma: <span id="label-filtro-turma">Todos</span>
+                        </button>
+                        <ul class="dropdown-menu" style="border-radius: 15px; border: 2px solid #dc3545;">
+                            <li><a class="dropdown-item" href="#" onclick="app.filtrarProjetos('Todos')">Todos</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filtrarProjetos('Maternal')">Maternal</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filtrarProjetos('Pré 1')">Pré 1</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="app.filtrarProjetos('Pré 2')">Pré 2</a></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="row g-3" id="lista-projetos">
@@ -289,62 +297,93 @@
     </div>
 
     <div class="modal fade" id="modalProjeto" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px; border: 3px solid #1a73e8;">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-dark">Cadastrar Novo Projeto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-figma-border p-3">
+                <div class="modal-body p-0">
                     <form id="formProjeto">
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold text-secondary">Nome do Projeto</label>
-                            <input type="text" id="inputNomeProjeto" class="form-control custom-input" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold text-secondary">Descrição</label>
-                            <textarea id="inputDescProjeto" class="form-control custom-input" rows="3"
-                                required></textarea>
+                        <div class="row g-4">
+                            <div class="col-12 col-md-5 d-flex flex-column align-items-center">
+                                <div class="img-preview-box mb-3 w-100 shadow-sm" id="previewContainerProjetoCriar">
+                                    <div class="text-center text-muted">
+                                        <i class="fa-regular fa-image fs-1 mb-2"></i>
+                                        <span class="fw-bold d-block small">NO IMAGE AVAILABLE</span>
+                                    </div>
+                                </div>
+                                <input type="file" id="inputImagemProjeto" class="d-none" accept="image/*"
+                                    onchange="app.gerarPreviewImagem(this, 'previewContainerProjetoCriar')">
+                                <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold w-100"
+                                    onclick="document.getElementById('inputImagemProjeto').click()">Add Imagem</button>
+                            </div>
+
+                            <div class="col-12 col-md-7 d-flex flex-column gap-3">
+                                <input type="text" id="inputNomeProjeto" class="form-control input-figma-red fw-bold"
+                                    placeholder="Adicionar Titulo" required>
+
+                                <select id="inputTurmaProjeto"
+                                    class="form-select input-figma-red text-secondary fw-bold">
+                                    <option value="Todos" selected>Todas as Turmas</option>
+                                    <option value="Maternal">Maternal</option>
+                                    <option value="Pré 1">Pré 1</option>
+                                    <option value="Pré 2">Pré 2</option>
+                                </select>
+
+                                <textarea id="inputDescProjeto" class="form-control input-figma-red flex-grow-1"
+                                    style="min-height: 120px;" placeholder="Adicionar descrição" required></textarea>
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
-                    <button type="button" class="btn btn-light rounded-pill px-4"
-                        data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-entrar px-4" onclick="app.criarProjeto()">Salvar
-                        Projeto</button>
+                <div class="modal-footer border-0 justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary rounded-pill px-5 shadow-sm fw-bold"
+                        onclick="app.criarProjeto()">Concluir</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="modalEditarProjeto" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius: 20px; border: 3px solid #ffc107;">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-dark">Editar Projeto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-figma-border p-3">
+                <div class="modal-body p-0">
                     <form id="formEditarProjeto">
                         <input type="hidden" id="editIdProjeto">
+                        <input type="hidden" id="editImagemProjetoAtual">
 
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold text-secondary">Nome do Projeto</label>
-                            <input type="text" id="editNomeProjeto" class="form-control custom-input" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small fw-bold text-secondary">Descrição</label>
-                            <textarea id="editDescProjeto" class="form-control custom-input" rows="3"
-                                required></textarea>
+                        <div class="row g-4">
+                            <div class="col-12 col-md-5 d-flex flex-column align-items-center">
+                                <div class="img-preview-box mb-3 w-100 shadow-sm" id="previewContainerProjetoEditar">
+                                </div>
+                                <input type="file" id="editNovaImagemProjeto" class="d-none" accept="image/*"
+                                    onchange="app.gerarPreviewImagem(this, 'previewContainerProjetoEditar')">
+                                <div class="d-flex flex-column gap-2 w-100">
+                                    <button type="button" class="btn btn-primary rounded-pill shadow-sm fw-bold"
+                                        onclick="app.removerPreviewImagem('previewContainerProjetoEditar', 'editImagemProjetoAtual')">Remover
+                                        Imagem</button>
+                                    <button type="button" class="btn btn-primary rounded-pill shadow-sm fw-bold"
+                                        onclick="document.getElementById('editNovaImagemProjeto').click()">Editar
+                                        Imagem</button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-7 d-flex flex-column gap-3">
+                                <input type="text" id="editNomeProjeto" class="form-control input-figma-red fw-bold"
+                                    required>
+                                <select id="editTurmaProjeto"
+                                    class="form-select input-figma-red text-secondary fw-bold">
+                                    <option value="Todos">Todas as Turmas</option>
+                                    <option value="Maternal">Maternal</option>
+                                    <option value="Pré 1">Pré 1</option>
+                                    <option value="Pré 2">Pré 2</option>
+                                </select>
+                                <textarea id="editDescProjeto" class="form-control input-figma-red flex-grow-1"
+                                    style="min-height: 120px;" required></textarea>
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
-                    <button type="button" class="btn btn-light rounded-pill px-4"
-                        data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-warning rounded-pill text-dark fw-bold px-4"
-                        onclick="app.salvarEdicaoProjeto()">Atualizar</button>
+                <div class="modal-footer border-0 justify-content-center mt-3">
+                    <button type="button" class="btn btn-primary rounded-pill px-5 shadow-sm fw-bold"
+                        onclick="app.salvarEdicaoProjeto()">Concluir</button>
                 </div>
             </div>
         </div>
@@ -487,17 +526,17 @@
     </div>
 
     <div class="modal fade" id="modalVisualizarInformativo" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content modal-figma-border p-4">
-            <div class="d-flex justify-content-end mb-2">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <div class="modal-body p-0" id="conteudoVisualizarInformativo">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-figma-border p-4">
+                <div class="d-flex justify-content-end mb-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0" id="conteudoVisualizarInformativo">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Models -->
@@ -518,7 +557,7 @@
 
     <!-- Ponto de Entrada -->
     <script src="scripts/script.js"></script>
-    
+
 </body>
 
 </html>

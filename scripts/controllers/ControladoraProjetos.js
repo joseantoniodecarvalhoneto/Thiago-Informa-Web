@@ -1,7 +1,6 @@
 /**
  * ControladoraProjetos
- * Responsabilidade única: gerenciar o CRUD de projetos.
- * Depende de: Fabrica (para criar projetos).
+ * Responsabilidade única: gerenciar o CRUD de projetos com suporte a imagens.
  */
 class ControladoraProjetos {
 
@@ -10,77 +9,46 @@ class ControladoraProjetos {
     }
 
     /**
-     * Cria um novo projeto usando a Fabrica e salva no localStorage.
+     * Cria um novo projeto convertendo a imagem e salvando no localStorage.
      */
     criarProjeto() {
         const nome = document.getElementById('inputNomeProjeto').value;
         const desc = document.getElementById('inputDescProjeto').value;
+        const turma = document.getElementById('inputTurmaProjeto').value;
+        const inputImagem = document.getElementById('inputImagemProjeto');
 
         if (nome.trim() === "" || desc.trim() === "") {
-            alert("Preencha todos os campos do projeto!");
+            alert("Preencha o nome e a descrição do projeto!");
             return;
         }
 
-        const novoProjeto = Fabrica.criarProjeto(nome, desc);
+        const finalizarSalvamento = (imagemBase64) => {
+            const novoProjeto = Fabrica.criarProjeto(nome, desc, turma, imagemBase64);
 
-        if (!novoProjeto.validar_dados()) {
-            alert("Dados do projeto inválidos!");
-            return;
+            let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
+            listaProjetos.push(novoProjeto);
+            localStorage.setItem('projetos_thiago_informa', JSON.stringify(listaProjetos));
+
+            document.getElementById('formProjeto').reset();
+            app.removerPreviewImagem('previewContainerProjetoCriar', null);
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalProjeto'));
+            if (modal) modal.hide();
+
+            this.exibirProjetos();
+        };
+
+        if (inputImagem.files && inputImagem.files.length > 0) {
+            const leitor = new FileReader();
+            leitor.onload = function (e) { finalizarSalvamento(e.target.result); };
+            leitor.readAsDataURL(inputImagem.files[0]);
+        } else {
+            finalizarSalvamento("");
         }
-
-        let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
-        listaProjetos.push(novoProjeto);
-        localStorage.setItem('projetos_thiago_informa', JSON.stringify(listaProjetos));
-
-        document.getElementById('formProjeto').reset();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalProjeto'));
-        modal.hide();
-
-        this.exibirProjetos();
-    }
-
-    /**
-     * Renderiza a lista de projetos na tela.
-     */
-    exibirProjetos() {
-        const container = document.getElementById('lista-projetos');
-        let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
-
-        container.innerHTML = "";
-
-        if (listaProjetos.length === 0) {
-            container.innerHTML = "<p class='text-center text-muted mt-4'>Nenhum projeto cadastrado.</p>";
-            return;
-        }
-
-        listaProjetos.forEach(proj => {
-            container.innerHTML += `
-                <div class="col-12 col-md-6">
-                    <div class="card card-feed p-2 d-flex flex-row align-items-center gap-3 position-relative pe-5">
-                        
-                        <!-- Botões de Ação Posicionados à Direita -->
-                        <div class="position-absolute top-0 end-0 h-100 d-flex flex-column justify-content-center pe-2 gap-2">
-                            <button class="btn btn-sm btn-outline-warning rounded-circle" onclick="app.abrirModalEditar(${proj.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                            <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="app.excluirProjeto(${proj.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-
-                        <div class="bg-light border rounded p-3 text-center" style="width: 80px; height: 70px;">
-                            <i class="fa-regular fa-folder-open text-muted fs-4"></i>
-                        </div>
-                        <div class="flex-grow-1 text-truncate">
-                            <span class="fw-bold small d-block text-truncate">${proj.nome_projeto}</span>
-                            <p class="text-muted mb-0 text-truncate-2" style="font-size: 0.75rem;">${proj.descricao}</p>
-                            <small class="text-primary" style="font-size: 0.65rem;">Criado em: ${proj.data_criacao}</small>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
     }
 
     /**
      * Abre o modal de edição preenchido com os dados do projeto.
-     * @param {number} id
      */
     abrirModalEditar(id) {
         let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
@@ -90,64 +58,115 @@ class ControladoraProjetos {
             document.getElementById('editIdProjeto').value = projeto.id;
             document.getElementById('editNomeProjeto').value = projeto.nome_projeto;
             document.getElementById('editDescProjeto').value = projeto.descricao;
+            document.getElementById('editTurmaProjeto').value = projeto.turma;
+            document.getElementById('editImagemProjetoAtual').value = projeto.imagem;
 
-            const modalEdicao = new bootstrap.Modal(document.getElementById('modalEditarProjeto'));
-            modalEdicao.show();
+            const containerPreview = document.getElementById('previewContainerProjetoEditar');
+            if (projeto.imagem && projeto.imagem !== "") {
+                containerPreview.innerHTML = `<img src="${projeto.imagem}" style="width:100%; height:100%; object-fit:cover;">`;
+            } else {
+                containerPreview.innerHTML = `<div class="text-center text-muted"><i class="fa-regular fa-image fs-1"></i></div>`;
+            }
+
+            new bootstrap.Modal(document.getElementById('modalEditarProjeto')).show();
         }
     }
 
     /**
-     * Edita um projeto existente (salva alterações).
-     * @param {number} index - o ID do projeto
-     * @param {Projeto} projetoAtualizado - dados atualizados (opcional, usa inputs do modal)
+     * Edita um projeto existente lidando com a possível nova imagem.
      */
-    editarProjeto(index, projetoAtualizado) {
-        const id = index || parseInt(document.getElementById('editIdProjeto').value);
-        const novoNome = projetoAtualizado ? projetoAtualizado.nome_projeto : document.getElementById('editNomeProjeto').value;
-        const novaDesc = projetoAtualizado ? projetoAtualizado.descricao : document.getElementById('editDescProjeto').value;
+    editarProjeto() {
+        const id = parseInt(document.getElementById('editIdProjeto').value);
+        const novoNome = document.getElementById('editNomeProjeto').value;
+        const novaDesc = document.getElementById('editDescProjeto').value;
+        const novaTurma = document.getElementById('editTurmaProjeto').value;
+        const imagemAtual = document.getElementById('editImagemProjetoAtual').value;
+        const inputNovaImagem = document.getElementById('editNovaImagemProjeto');
 
-        if (novoNome.trim() === "" || novaDesc.trim() === "") {
-            alert("Os campos não podem ficar vazios.");
-            return;
-        }
+        const finalizarEdicao = (imagemBase64) => {
+            let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
+            const idx = listaProjetos.findIndex(p => p.id === id);
 
-        let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
-        const idx = listaProjetos.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                listaProjetos[idx].nome_projeto = novoNome;
+                listaProjetos[idx].descricao = novaDesc;
+                listaProjetos[idx].turma = novaTurma;
+                listaProjetos[idx].imagem = imagemBase64;
 
-        if (idx !== -1) {
-            listaProjetos[idx].nome_projeto = novoNome;
-            listaProjetos[idx].descricao = novaDesc;
+                localStorage.setItem('projetos_thiago_informa', JSON.stringify(listaProjetos));
+                bootstrap.Modal.getInstance(document.getElementById('modalEditarProjeto')).hide();
+                this.exibirProjetos();
+            }
+        };
 
-            localStorage.setItem('projetos_thiago_informa', JSON.stringify(listaProjetos));
-
-            const modalInstancia = bootstrap.Modal.getInstance(document.getElementById('modalEditarProjeto'));
-            if (modalInstancia) modalInstancia.hide();
-
-            this.exibirProjetos();
+        if (inputNovaImagem.files && inputNovaImagem.files[0]) {
+            const leitor = new FileReader();
+            leitor.onload = function (e) { finalizarEdicao(e.target.result); };
+            leitor.readAsDataURL(inputNovaImagem.files[0]);
+        } else {
+            finalizarEdicao(imagemAtual);
         }
     }
 
     /**
-     * Exclui um projeto pelo ID.
-     * @param {number} id
+     * Filtra projetos pela turma selecionada.
+     */
+    filtrarProjetos(turmaSelecionada) {
+        const label = document.getElementById('label-filtro-turma');
+        if (label) label.innerText = turmaSelecionada;
+        this.exibirProjetos(turmaSelecionada);
+    }
+
+    /**
+     * Renderiza a lista de projetos na tela.
+     */
+    exibirProjetos(filtroTurma = 'Todos') {
+        const container = document.getElementById('lista-projetos');
+        let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
+
+        if (filtroTurma !== 'Todos') {
+            listaProjetos = listaProjetos.filter(proj => proj.turma === filtroTurma);
+        }
+
+        container.innerHTML = "";
+        listaProjetos.slice().reverse().forEach(proj => {
+            // Lógica do quadradinho cinza com ícone ou imagem
+            const miniatura = proj.imagem && proj.imagem !== ""
+                ? `<img src="${proj.imagem}" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">`
+                : `<i class="fa-regular fa-folder-open text-muted fs-4"></i>`;
+
+            container.innerHTML += `
+                <div class="col-12 col-md-6">
+                    <div class="card card-feed p-2 d-flex flex-row align-items-center gap-3 position-relative pe-5">
+                        <div class="position-absolute top-0 end-0 h-100 d-flex flex-column justify-content-center pe-2 gap-2">
+                            <button class="btn btn-sm btn-outline-warning rounded-circle" onclick="app.abrirModalEditar(${proj.id})"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="app.excluirProjeto(${proj.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        <div class="bg-light border rounded d-flex justify-content-center align-items-center" style="width: 80px; height: 70px; overflow: hidden; flex-shrink: 0;">
+                            ${miniatura}
+                        </div>
+                        <div class="flex-grow-1 text-truncate">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold small d-block text-truncate">${proj.nome_projeto}</span>
+                                <span class="badge bg-danger rounded-pill text-white" style="font-size: 0.6rem;">${proj.turma}</span>
+                            </div>
+                            <p class="text-muted mb-0 text-truncate-2" style="font-size: 0.75rem;">${proj.descricao}</p>
+                            <small class="text-primary" style="font-size: 0.65rem;">Criado em: ${proj.data_criacao}</small>
+                        </div>
+                    </div>
+                </div>`;
+        });
+    }
+
+    /**
+     * Exclui um projeto.
      */
     excluirProjeto(id) {
-        if (confirm("Tem certeza que deseja excluir este projeto permanentemente?")) {
+        if (confirm("Tem certeza que deseja excluir este projeto?")) {
             let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
             listaProjetos = listaProjetos.filter(p => p.id !== id);
             localStorage.setItem('projetos_thiago_informa', JSON.stringify(listaProjetos));
-
             this.exibirProjetos();
         }
-    }
-
-    /**
-     * Obtém o valor de um campo de entrada.
-     * @param {string} inputId
-     * @returns {string}
-     */
-    obterInput(inputId) {
-        const elemento = document.getElementById(inputId);
-        return elemento ? elemento.value : "";
     }
 }

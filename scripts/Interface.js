@@ -166,6 +166,14 @@ class Interface {
         this.controladoraProjetos.excluirProjeto(id);
     }
 
+    /**
+     * Filtra os projetos por turma.
+     * @param {string} turma 
+     */
+    filtrarProjetos(turma) {
+        this.controladoraProjetos.filtrarProjetos(turma);
+    }
+
     // ========================
     // INFORMATIVOS (delegação)
     // ========================

@@ -11,8 +11,8 @@ class Fabrica {
      * @param {string} descricao
      * @returns {Projeto}
      */
-    static criarProjeto(nome, descricao) {
-        return new Projeto(nome, descricao);
+    static criarProjeto(nome, descricao, turma, imagem) {
+        return new Projeto(nome, descricao, turma, imagem);
     }
 
     /**
