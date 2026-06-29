@@ -16,6 +16,9 @@ class Interface {
         // Dados do calendário
         this.dataAtualCalendario = new Date();
         this.mesesNomes = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+
+        // Carrega avatar salvo no localStorage ao iniciar
+        this._carregarAvatarSalvo();
     }
 
     // ========================
@@ -76,8 +79,15 @@ class Interface {
             document.getElementById('tela-login').classList.add('d-none');
             document.getElementById('tela-home').classList.remove('d-none');
 
+            // Aplica restrições visuais baseadas no perfil (Administrador vs Responsável)
+            this.aplicarPermissoes();
+
+            // Navega para a aba inicial (feed de informativos)
+            this.navegarAba('inicio');
+
             this.controladoraProjetos.exibirProjetos();
             this.controladoraInfo.carregarInformativos();
+            this.controladoraInfo.carregarFixados();
 
             this.preencherPerfil(this.controladoraAuth.usuarioLogado);
         }
@@ -97,10 +107,33 @@ class Interface {
     }
 
     /**
+     * Aplica permissões visuais com base no perfil do usuário logado.
+     * Administradores vêem todos os controles.
+     * Responsáveis só podem visualizar (sem criar, editar, excluir ou fixar).
+     */
+    aplicarPermissoes() {
+        const telaHome = document.getElementById('tela-home');
+        if (this.controladoraAuth.verificarAdm()) {
+            // Administrador: remove restrição
+            telaHome.classList.remove('responsavel');
+        } else {
+            // Responsável: aplica restrição
+            telaHome.classList.add('responsavel');
+        }
+    }
+
+    /**
      * Cria um novo usuário delegando para ControladoraAutenticacao.
      */
     criarUsuario() {
         this.controladoraAuth.criarUsuario();
+    }
+
+    /**
+     * Cria um novo usuário do tipo Responsável.
+     */
+    criarResponsavel() {
+        this.controladoraAuth.criarResponsavel();
     }
 
     /**
@@ -134,7 +167,7 @@ class Interface {
         document.getElementById('tela-home').classList.add('d-none');
         document.getElementById('tela-login').classList.remove('d-none');
 
-        document.getElementById('formLogin').reset();
+        document.getElementById('loginForm').reset();
     }
 
     // ========================
@@ -251,6 +284,115 @@ class Interface {
     }
 
     /**
+     * Carrega e salva a foto do avatar da tela de login.
+     * @param {HTMLInputElement} inputElement
+     */
+    carregarAvatarLogin(inputElement) {
+        if (inputElement.files && inputElement.files[0]) {
+            const leitor = new FileReader();
+            leitor.onload = function (e) {
+                const base64 = e.target.result;
+                localStorage.setItem('avatar_login_thiago_informa', base64);
+
+                const preview = document.getElementById('loginAvatarPreview');
+                const icone = document.getElementById('loginAvatarIcone');
+                if (preview) {
+                    if (icone) icone.style.display = 'none';
+                    preview.style.backgroundImage = `url(${base64})`;
+                    preview.style.backgroundSize = 'cover';
+                    preview.style.backgroundPosition = 'center';
+                }
+            };
+            leitor.readAsDataURL(inputElement.files[0]);
+        }
+    }
+
+    /**
+     * Restaura o avatar salvo no localStorage ao carregar a página.
+     * @private
+     */
+    _carregarAvatarSalvo() {
+        const avatarSalvo = localStorage.getItem('avatar_login_thiago_informa');
+        if (avatarSalvo) {
+            const preview = document.getElementById('loginAvatarPreview');
+            const icone = document.getElementById('loginAvatarIcone');
+            if (preview) {
+                if (icone) icone.style.display = 'none';
+                preview.style.backgroundImage = `url(${avatarSalvo})`;
+                preview.style.backgroundSize = 'cover';
+                preview.style.backgroundPosition = 'center';
+            }
+        }
+    }
+
+    /**
+     * Carrega e salva a foto do avatar da tela de perfil.
+     * @param {HTMLInputElement} inputElement
+     */
+    carregarAvatarPerfil(inputElement) {
+        if (inputElement.files && inputElement.files[0]) {
+            const leitor = new FileReader();
+            leitor.onload = function (e) {
+                const base64 = e.target.result;
+                localStorage.setItem('avatar_perfil_thiago_informa', base64);
+
+                const preview = document.getElementById('perfilAvatarPreview');
+                const icone = document.getElementById('perfilAvatarIcone');
+                if (preview) {
+                    if (icone) icone.style.display = 'none';
+                    preview.style.backgroundImage = `url(${base64})`;
+                    preview.style.backgroundSize = 'cover';
+                    preview.style.backgroundPosition = 'center';
+                }
+            };
+            leitor.readAsDataURL(inputElement.files[0]);
+        }
+    }
+
+    /**
+     * Carrega os dados do usuário logado e preenche a aba de perfil.
+     */
+    carregarDadosPerfil() {
+        const email = this.controladoraAuth.usuarioLogadoEmail;
+        if (!email) return;
+
+        let listaUsuarios = JSON.parse(localStorage.getItem('usuarios_thiago_informa')) || [];
+        const user = listaUsuarios.find(u => u.email === email);
+
+        if (user) {
+            const elNome = document.getElementById('perfil-nome');
+            const elEmail = document.getElementById('perfil-email');
+            const elPapel = document.getElementById('perfil-papel');
+
+            if (elNome) elNome.textContent = user.nome;
+            if (elEmail) elEmail.textContent = user.email;
+            if (elPapel) elPapel.textContent = user.perfil;
+        }
+
+        this._carregarAvatarPerfilSalvo();
+    }
+
+    /**
+     * Restaura o avatar do perfil salvo no localStorage.
+     * @private
+     */
+    _carregarAvatarPerfilSalvo() {
+        const avatarSalvo = localStorage.getItem('avatar_perfil_thiago_informa');
+        const preview = document.getElementById('perfilAvatarPreview');
+        const icone = document.getElementById('perfilAvatarIcone');
+        if (avatarSalvo && preview) {
+            if (icone) icone.style.display = 'none';
+            preview.style.backgroundImage = `url(${avatarSalvo})`;
+            preview.style.backgroundSize = 'cover';
+            preview.style.backgroundPosition = 'center';
+        } else if (preview) {
+            // Sem avatar salvo: garante que o ícone aparece
+            if (icone) icone.style.display = '';
+            preview.style.backgroundImage = 'none';
+        }
+    }
+
+    /**
      * Rola o carrossel de fixados manualmente.
      * @param {number} direcao 
      */
@@ -293,6 +435,10 @@ class Interface {
         if (abaNome === 'agenda') {
             this.renderizarCalendario();
             this.carregarFeriados();
+        }
+
+        if (abaNome === 'perfil') {
+            this.carregarDadosPerfil();
         }
     }
 

@@ -48,7 +48,7 @@ class ControladoraProjetos {
     }
 
     /**
-     * Abre o modal de edição preenchido com os dados do projeto.
+     * modal de edição com dados do projeto
      */
     abrirModalEditar(id) {
         let listaProjetos = JSON.parse(localStorage.getItem('projetos_thiago_informa')) || [];
@@ -73,7 +73,7 @@ class ControladoraProjetos {
     }
 
     /**
-     * Edita um projeto existente lidando com a possível nova imagem.
+     * Edita um projeto existente 
      */
     editarProjeto() {
         const id = parseInt(document.getElementById('editIdProjeto').value);
@@ -109,7 +109,7 @@ class ControladoraProjetos {
     }
 
     /**
-     * Filtra projetos pela turma selecionada.
+     * Filtra projetos pela turma selecionada
      */
     filtrarProjetos(turmaSelecionada) {
         const label = document.getElementById('label-filtro-turma');
@@ -138,7 +138,7 @@ class ControladoraProjetos {
             container.innerHTML += `
                 <div class="col-12 col-md-6">
                     <div class="card card-feed p-2 d-flex flex-row align-items-center gap-3 position-relative pe-5">
-                        <div class="position-absolute top-0 end-0 h-100 d-flex flex-column justify-content-center pe-2 gap-2">
+                        <div class="position-absolute top-0 end-0 h-100 d-flex flex-column justify-content-center pe-2 gap-2 apenas-admin">
                             <button class="btn btn-sm btn-outline-warning rounded-circle" onclick="app.abrirModalEditar(${proj.id})"><i class="fa-solid fa-pen"></i></button>
                             <button class="btn btn-sm btn-outline-danger rounded-circle" onclick="app.excluirProjeto(${proj.id})"><i class="fa-solid fa-trash"></i></button>
                         </div>

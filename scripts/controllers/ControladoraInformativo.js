@@ -53,7 +53,7 @@ class ControladoraInformativo {
                 <div class="col-12">
                     <div class="card p-3 shadow-sm mb-3 position-relative modal-figma-border">
                         
-                        <div class="position-absolute top-0 end-0 p-3 d-flex gap-2 z-1">
+                        <div class="position-absolute top-0 end-0 p-3 d-flex gap-2 z-1 apenas-admin">
                             <button class="btn btn-light rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; border: 2px solid #000;" onclick="app.alternarFixado(${info.id})" title="Fixar Post">
                                 <i class="fa-solid fa-thumbtack ${corAlfinete}"></i>
                             </button>
@@ -123,7 +123,7 @@ class ControladoraInformativo {
             container.innerHTML += `
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="card card-fixado p-3 position-relative h-100 modal-figma-border">
-                        <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-danger cursor-pointer" style="transform: rotate(45deg); z-index: 2;" onclick="app.alternarFixado(${info.id})" title="Desfixar"></i>
+                        <i class="fa-solid fa-thumbtack position-absolute top-0 end-0 m-2 text-danger cursor-pointer apenas-admin" style="transform: rotate(45deg); z-index: 2;" onclick="app.alternarFixado(${info.id})" title="Desfixar"></i>
                         
                         <div onclick="app.abrirModalVisualizarInfo(${info.id})" style="cursor: pointer;" class="h-100 d-flex flex-column">
                             <span class="fw-bold small d-block text-truncate pe-4 text-dark">${info.titulo}</span>

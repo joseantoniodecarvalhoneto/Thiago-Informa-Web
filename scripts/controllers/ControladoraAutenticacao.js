@@ -78,14 +78,46 @@ class ControladoraAutenticacao {
         listaUsuarios.push(novoUser);
         localStorage.setItem('usuarios_thiago_informa', JSON.stringify(listaUsuarios));
 
-        alert("Conta criada com sucesso! Faça o login.");
+        alert("Administrador criado com sucesso! Faça o login.");
 
         document.getElementById('formNovoUsuario').reset();
         bootstrap.Modal.getInstance(document.getElementById('modalCadastrarUsuario')).hide();
     }
 
     /**
-     * Abre o modal de edição de perfil preenchido com os dados do usuário logado.
+     * Cria um novo usuário do tipo Responsável usando a Fabrica.
+     */
+    criarResponsavel() {
+        const nome = document.getElementById('cadNomeResponsavel').value;
+        const email = document.getElementById('cadEmailResponsavel').value;
+        const senha = document.getElementById('cadSenhaResponsavel').value;
+
+        if (!nome || !email || !senha) {
+            alert("Preencha todos os campos!");
+            return;
+        }
+
+        let listaUsuarios = JSON.parse(localStorage.getItem('usuarios_thiago_informa')) || [];
+
+        if (listaUsuarios.some(u => u.email === email)) {
+            alert("Este e-mail já está cadastrado!");
+            return;
+        }
+
+        // Cria o usuário e sobrescreve o perfil para "Responsável"
+        const novoUser = Fabrica.criarUsuario(nome, email, senha);
+        novoUser.perfil = "Responsável";
+        listaUsuarios.push(novoUser);
+        localStorage.setItem('usuarios_thiago_informa', JSON.stringify(listaUsuarios));
+
+        alert("Responsável criado com sucesso! Faça o login.");
+
+        document.getElementById('formNovoResponsavel').reset();
+        bootstrap.Modal.getInstance(document.getElementById('modalCadastrarResponsavel')).hide();
+    }
+
+    /**
+     * modal edição perfil
      */
     abrirModalEditarUsuario() {
         let listaUsuarios = JSON.parse(localStorage.getItem('usuarios_thiago_informa')) || [];
@@ -122,7 +154,7 @@ class ControladoraAutenticacao {
 
     /**
      * Exclui a conta do usuário logado.
-     * @param {Function} onLogout - callback executado após a exclusão
+     * @param {Function} onLogout 
      */
     excluirConta(onLogout) {
         if (confirm("Tem certeza que deseja excluir sua conta DEFINITIVAMENTE? Você perderá o acesso.")) {
@@ -137,7 +169,7 @@ class ControladoraAutenticacao {
     }
 
     /**
-     * Realiza o logout do usuário.
+     * Realiza o logout 
      */
     logout() {
         this.conta_logada = false;
