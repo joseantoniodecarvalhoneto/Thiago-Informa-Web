@@ -15,16 +15,7 @@ class ControladoraInformativo {
     }
 
     /**
-     * Carrega e renderiza a lista de informativos no feed a partir do LocalStorage.
-     */
-    /**
-      * Carrega e renderiza a lista de informativos no feed a partir do LocalStorage.
-      */
-    /**
-      * Carrega e renderiza a lista de informativos no feed a partir do LocalStorage.
-      */
-    /**
-     * Carrega e renderiza a lista de informativos no feed a partir do LocalStorage.
+     * Carrega e renderiza a lista de informativos
      */
     carregarInformativos() {
         const container = document.getElementById('container-feed');
@@ -95,7 +86,7 @@ class ControladoraInformativo {
     }
 
     /**
-     * Carrega os informativos fixados e gerencia as setas/giro automático.
+     * Carrega os informativos fixados
      */
     carregarFixados() {
         const container = document.getElementById('container-fixados-scroll');
@@ -111,14 +102,12 @@ class ControladoraInformativo {
 
         if (fixados.length === 0) {
             container.innerHTML = "<p class='text-muted small px-3 mt-2'>Nenhum post fixado no momento.</p>";
-            // Oculta setas e desliga o giro
             if (btnPrev) btnPrev.className = "btn p-0 border-0 position-absolute start-0 top-50 translate-middle-y z-3 d-none";
             if (btnNext) btnNext.className = "btn p-0 border-0 position-absolute end-0 top-50 translate-middle-y z-3 d-none";
             window.deveGirarCarrossel = false;
             return;
         }
 
-        // Injeta os cards fixados
         fixados.forEach(info => {
             container.innerHTML += `
                 <div class="col-6 col-md-4 col-lg-3">
@@ -134,18 +123,16 @@ class ControladoraInformativo {
             `;
         });
 
-        //Se tiver 4 ou menos, não gira e esconde as setas.
         if (fixados.length <= 4) {
             if (btnPrev) btnPrev.className = "btn p-0 border-0 position-absolute start-0 top-50 translate-middle-y z-3 d-none";
             if (btnNext) btnNext.className = "btn p-0 border-0 position-absolute end-0 top-50 translate-middle-y z-3 d-none";
-            this.deveGirarCarrossel = false; // Trava o carrossel na classe
-            clearInterval(this.carrosselIntervalo); // Para o motor se estiver rodando
+            this.deveGirarCarrossel = false; 
+            clearInterval(this.carrosselIntervalo); 
         } else {
-            // Se tiver 5 ou mais, mostra as setas no Desktop e liga o giro
             if (btnPrev) btnPrev.className = "btn p-0 border-0 position-absolute start-0 top-50 translate-middle-y z-3 d-none d-md-block";
             if (btnNext) btnNext.className = "btn p-0 border-0 position-absolute end-0 top-50 translate-middle-y z-3 d-none d-md-block";
-            this.deveGirarCarrossel = true; // Libera o carrossel
-            this.iniciarCarrossel(); // Dá a partida no motor!
+            this.deveGirarCarrossel = true; 
+            this.iniciarCarrossel(); 
         }
     }
 
@@ -162,9 +149,7 @@ class ControladoraInformativo {
             return;
         }
 
-        // Função interna que finaliza o salvamento (chamada após a conversão da imagem)
         const finalizarSalvamento = (imagemBase64) => {
-            // Null na data fará a classe gerar a data atual automaticamente
             const novoInfo = Fabrica.criarInformativo(titulo, desc, null, imagemBase64);
 
             if (!novoInfo.validar_dados()) {
@@ -183,20 +168,16 @@ class ControladoraInformativo {
             this.carregarInformativos();
         };
 
-        // Verifica se o usuário selecionou algum arquivo
         if (inputImagem.files && inputImagem.files[0]) {
             const leitor = new FileReader();
 
-            // Quando a conversão terminar, ele dispara essa função
             leitor.onload = function (evento) {
                 const base64String = evento.target.result; // A imagem convertida em string de texto!
                 finalizarSalvamento(base64String);
             };
 
-            // Comando que inicia a leitura e converte o arquivo para Base64
             leitor.readAsDataURL(inputImagem.files[0]);
         } else {
-            // Se não houver imagem selecionada, salva passando uma string vazia
             finalizarSalvamento("");
         }
     }
@@ -210,7 +191,6 @@ class ControladoraInformativo {
         const info = listaInformativos.find(i => i.id === id);
 
         if (info) {
-            // Preenche os campos visíveis e os ocultos
             document.getElementById('editIdInfo').value = info.id;
             document.getElementById('editTituloInfo').value = info.titulo;
             document.getElementById('editDescInfo').value = info.descricao;
@@ -236,7 +216,6 @@ class ControladoraInformativo {
             return;
         }
 
-        // Função interna que efetiva a edição (como no criarInformativo)
         const finalizarEdicao = (imagemBase64) => {
             let listaInformativos = JSON.parse(localStorage.getItem('informativos_thiago_informa')) || [];
             const index = listaInformativos.findIndex(i => i.id === id);
@@ -252,19 +231,17 @@ class ControladoraInformativo {
                 const modalInstancia = bootstrap.Modal.getInstance(document.getElementById('modalEditarInformativo'));
                 if (modalInstancia) modalInstancia.hide();
 
-                this.carregarInformativos(); // Recarrega o Feed
+                this.carregarInformativos(); 
             }
         };
 
-        // Verifica se o usuário escolheu uma foto NOVA.
         if (inputNovaImagem.files && inputNovaImagem.files[0]) {
             const leitor = new FileReader();
             leitor.onload = function (evento) {
-                finalizarEdicao(evento.target.result); // Salva com a nova imagem em base64
+                finalizarEdicao(evento.target.result); 
             };
             leitor.readAsDataURL(inputNovaImagem.files[0]);
         } else {
-            // Se não enviou nada novo, finaliza usando a string base64 antiga
             finalizarEdicao(imagemAtual);
         }
     }
@@ -276,11 +253,10 @@ class ControladoraInformativo {
     excluirInfo(id) {
         if (confirm("Tem certeza que deseja excluir este post permanentemente?")) {
             let listaInformativos = JSON.parse(localStorage.getItem('informativos_thiago_informa')) || [];
-            // Filtra removendo o post que tem o ID selecionado
             listaInformativos = listaInformativos.filter(i => i.id !== id);
             localStorage.setItem('informativos_thiago_informa', JSON.stringify(listaInformativos));
 
-            this.carregarInformativos(); // Recarrega o Feed
+            this.carregarInformativos(); 
         }
     }
 
@@ -311,7 +287,6 @@ class ControladoraInformativo {
             </div>
         `;
 
-        // Zera o input de arquivo (se houver) e o hidden
         const inputFisico = containerId === 'previewContainerCriar' ? document.getElementById('inputImagemInfo') : document.getElementById('editNovaImagemInfo');
         if (inputFisico) inputFisico.value = "";
 
@@ -339,11 +314,9 @@ class ControladoraInformativo {
         const index = listaInformativos.findIndex(i => i.id === id);
 
         if (index !== -1) {
-            // Inverte o estado booleano (se é false vira true, se é true vira false)
             listaInformativos[index].fixado = !listaInformativos[index].fixado;
             localStorage.setItem('informativos_thiago_informa', JSON.stringify(listaInformativos));
 
-            // Recarrega as duas visões para refletir a mudança instantaneamente
             this.carregarInformativos();
             this.carregarFixados();
         }
@@ -412,7 +385,6 @@ class ControladoraInformativo {
         if (info) {
             const container = document.getElementById('conteudoVisualizarInformativo');
             
-            // Verifica a imagem
             const blocoImagem = info.imagem && info.imagem !== ""
                 ? `<img src="${info.imagem}" class="img-fluid rounded w-100 shadow-sm bg-light" style="object-fit: cover; height: 100%; min-height: 150px; border: 1px solid #dee2e6;" alt="Capa do post">`
                 : `<div class="img-preview-box w-100 shadow-sm" style="height: 100%; min-height: 150px;">
@@ -422,7 +394,6 @@ class ControladoraInformativo {
                         </div>
                    </div>`;
 
-            // Injeta o HTML com a mesma lógica responsiva do Feed
             container.innerHTML = `
                 <div class="d-md-none mb-3">
                     <span class="fw-bold fs-6 text-dark d-block">${info.titulo}</span>

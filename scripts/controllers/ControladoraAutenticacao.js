@@ -19,7 +19,7 @@ class ControladoraAutenticacao {
     /**
      * Verifica as credenciais e executa o login.
      * @param {Event} event
-     * @returns {boolean} true se o login foi bem-sucedido
+     * @returns {boolean} 
      */
     verificaLogin(event) {
         event.preventDefault();
@@ -55,7 +55,7 @@ class ControladoraAutenticacao {
     }
 
     /**
-     * Cria um novo usuário usando a Fabrica.
+     * Cria um novo usuário
      */
     criarUsuario() {
         const nome = document.getElementById('cadNomeUsuario').value;
@@ -85,7 +85,7 @@ class ControladoraAutenticacao {
     }
 
     /**
-     * Cria um novo usuário do tipo Responsável usando a Fabrica.
+     * Cria um novo usuário do tipo Responsável
      */
     criarResponsavel() {
         const nome = document.getElementById('cadNomeResponsavel').value;
@@ -104,7 +104,6 @@ class ControladoraAutenticacao {
             return;
         }
 
-        // Cria o usuário e sobrescreve o perfil para "Responsável"
         const novoUser = Fabrica.criarUsuario(nome, email, senha);
         novoUser.perfil = "Responsável";
         listaUsuarios.push(novoUser);
@@ -177,5 +176,4 @@ class ControladoraAutenticacao {
     }
 }
 
-// Propriedade estática para o Singleton
 ControladoraAutenticacao.instancia = null;

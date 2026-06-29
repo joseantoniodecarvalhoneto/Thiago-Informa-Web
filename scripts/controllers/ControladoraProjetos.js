@@ -130,7 +130,6 @@ class ControladoraProjetos {
 
         container.innerHTML = "";
         listaProjetos.slice().reverse().forEach(proj => {
-            // Lógica do quadradinho cinza com ícone ou imagem
             const miniatura = proj.imagem && proj.imagem !== ""
                 ? `<img src="${proj.imagem}" class="img-fluid rounded" style="width: 100%; height: 100%; object-fit: cover;">`
                 : `<i class="fa-regular fa-folder-open text-muted fs-4"></i>`;

@@ -9,5 +9,4 @@
  *   Facade:      Interface
  */
 
-// Instância global da fachada — usada pelo HTML via onclick="app.metodo()"
 const app = new Interface();

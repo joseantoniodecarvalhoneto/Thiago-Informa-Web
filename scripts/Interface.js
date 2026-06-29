@@ -8,16 +8,13 @@
 class Interface {
 
     constructor() {
-        // Instancia as controladoras
         this.controladoraAuth = new ControladoraAutenticacao();
         this.controladoraInfo = new ControladoraInformativo();
         this.controladoraProjetos = new ControladoraProjetos();
 
-        // Dados do calendário
         this.dataAtualCalendario = new Date();
         this.mesesNomes = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
 
-        // Carrega avatar salvo no localStorage ao iniciar
         this._carregarAvatarSalvo();
     }
 
@@ -79,10 +76,8 @@ class Interface {
             document.getElementById('tela-login').classList.add('d-none');
             document.getElementById('tela-home').classList.remove('d-none');
 
-            // Aplica restrições visuais baseadas no perfil (Administrador vs Responsável)
             this.aplicarPermissoes();
 
-            // Navega para a aba inicial (feed de informativos)
             this.navegarAba('inicio');
 
             this.controladoraProjetos.exibirProjetos();
@@ -114,10 +109,8 @@ class Interface {
     aplicarPermissoes() {
         const telaHome = document.getElementById('tela-home');
         if (this.controladoraAuth.verificarAdm()) {
-            // Administrador: remove restrição
             telaHome.classList.remove('responsavel');
         } else {
-            // Responsável: aplica restrição
             telaHome.classList.add('responsavel');
         }
     }
@@ -228,7 +221,7 @@ class Interface {
      */
     carregarInformativos() {
         this.controladoraInfo.carregarInformativos();
-        this.controladoraInfo.carregarFixados(); // Adicione esta linha
+        this.controladoraInfo.carregarFixados(); 
     }
 
     /**
@@ -373,7 +366,7 @@ class Interface {
     }
 
     /**
-     * Restaura o avatar do perfil salvo no localStorage.
+     * Restaura o avatar do perfil salvo 
      * @private
      */
     _carregarAvatarPerfilSalvo() {
@@ -386,7 +379,6 @@ class Interface {
             preview.style.backgroundSize = 'cover';
             preview.style.backgroundPosition = 'center';
         } else if (preview) {
-            // Sem avatar salvo: garante que o ícone aparece
             if (icone) icone.style.display = '';
             preview.style.backgroundImage = 'none';
         }

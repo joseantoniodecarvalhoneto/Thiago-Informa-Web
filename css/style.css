@@ -175,8 +175,6 @@ p {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Elementos da Home */
-
 /* Elementos de Perfil*/
 
 .perfil-banner {
@@ -320,7 +318,6 @@ p {
 .fab-btn {
     position: fixed;
     bottom: 80px;
-    /* Fica acima da barra de navegação no mobile */
     right: 20px;
     width: 60px;
     height: 60px;
@@ -337,10 +334,8 @@ p {
     cursor: pointer;
 }
 
-/* Modais Customizados  */
 .modal-figma-border {
     border: 2px solid #dc3545 !important;
-    /* Vermelho */
     border-radius: 20px !important;
 }
 
@@ -350,7 +345,6 @@ p {
     padding: 12px;
 }
 
-/* Caixa de Preview de Imagem */
 .img-preview-box {
     border: 2px solid #adb5bd;
     border-radius: 10px;
@@ -418,9 +412,7 @@ p {
     box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
 }
 
-/* ===================================================
-                     ABA PERFIL 
-   =================================================== */
+/* Elementos do perfil */
 
 .perfil-aba-container {
     margin: -1.5rem -0.75rem 0;
